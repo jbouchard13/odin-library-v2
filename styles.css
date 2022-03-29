@@ -1,0 +1,87 @@
+body {
+  background-color: grey;
+  margin: 0;
+  padding: 0;
+  font-family: "Courier New", Courier, monospace;
+}
+
+.nav {
+  padding: 50px 0 50px 0;
+  width: 100%;
+  background-color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nav-title {
+  padding-left: 50px;
+  font-size: 22px;
+  font-weight: bolder;
+}
+
+.add-button {
+  padding-right: 50px;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.library-container {
+  padding-top: 20px;
+}
+
+.library-header {
+  font-size: 18px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.book-cards {
+  display: grid;
+  padding-top: 30px;
+  grid-gap: 30px;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+}
+
+.add-form {
+  display: none;
+  width: 50%;
+  padding-top: 20px;
+}
+
+.form-control-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.inputs {
+  display: flex;
+  flex-direction: column;
+}
+
+.add-button {
+}
+
+.add-to-lib {
+}
+
+.close-button {
+}
+
+.delete-button {
+}
+
+.button:hover {
+  color: orange;
+  cursor: pointer;
+}
+
+.display {
+  display: block;
+}

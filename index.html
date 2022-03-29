@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="styles.css" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="nav">
+      <div class="nav-title">Library App</div>
+      <div class="add-button button">Add Book</div>
+    </div>
+    <div class="container">
+      <div class="add-form">
+        <div class="inputs">
+          <label for="title">Book's Title</label>
+          <input type="text" id="title" name="title" />
+
+          <label for="author">Book's Author</label>
+          <input type="text" id="author" name="author" />
+
+          <label for="pages">Number of Pages</label>
+          <input type="number" id="pages" name="pages" />
+
+          <label for="hasRead">Read before?</label>
+          <select id="hasRead">
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+          </select>
+        </div>
+        <div class="form-control-container">
+          <div class="submit button">Add to Library</div>
+          <div class="close button">Close</div>
+        </div>
+      </div>
+      <div class="library-container">
+        <div class="library-header">Book Collection</div>
+        <div class="book-cards">
+          <!-- cards will be created with js -->
+          <div class="card-container">
+            <div class="card-title">Title: White Fang</div>
+            <div class="card-author">Author: Jack London</div>
+            <div class="card-pages">Page Count: 160</div>
+            <div class="card-hasRead">Read?: Yes</div>
+            <div class="delete-button button">Delete</div>
+          </div>
+          <div class="card-container">
+            <div class="card-title">Title: White Fang</div>
+            <div class="card-author">Author: Jack London</div>
+            <div class="card-pages">Page Count: 160</div>
+            <div class="card-hasRead">Read?: Yes</div>
+            <div class="delete-button button">Delete</div>
+          </div>
+          <div class="card-container">
+            <div class="card-title">Title: White Fang</div>
+            <div class="card-author">Author: Jack London</div>
+            <div class="card-pages">Page Count: 160</div>
+            <div class="card-hasRead">Read?: Yes</div>
+            <div class="delete-button button">Delete</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="script.js"></script>
+  </body>
+</html>
