@@ -21,14 +21,45 @@ closeButton.addEventListener("click", () => {
 let myLibrary = [];
 
 // function to handle creation of new book cards
-const createCard = (book) => {};
+const createCard = (book) => {
+  const cardContainer = document.createElement("div");
+  cardContainer.classList.add("card-container");
+  const cardTitle = document.createElement("div");
+  cardTitle.classList.add("card-title");
+  cardTitle.innerHTML += book.title;
+
+  const cardAuthor = document.createElement("div");
+  cardAuthor.classList.add("card-author");
+  cardAuthor.innerHTML += book.author;
+
+  const cardPages = document.createElement("div");
+  cardPages.classList.add("card-pages");
+  cardPages.innerHTML += book.pages;
+
+  const cardHasRead = document.createElement("div");
+  cardHasRead.classList.add("card-hasRead");
+  cardHasRead.innerHTML += book.isRead;
+
+  const deleteButton = document.createElement("div");
+  deleteButton.classList.add("delete-button", "button");
+  deleteButton.innerHTML += "Delete";
+
+  cardContainer.append(
+    cardTitle,
+    cardAuthor,
+    cardPages,
+    cardHasRead,
+    deleteButton
+  );
+  bookCardsContainer.appendChild(cardContainer);
+};
 
 // create a book constructor that takes in the title, pages, and author
 function Book(title, pages, author) {
   this.title = title;
   this.pages = pages;
   this.author = author;
-  this.isRead = false;
+  this.isRead = "No";
 }
 
 // using the prototype, add a function that adds the selected book to the library.
@@ -45,7 +76,11 @@ whiteFang.addBookToLibrary();
 
 const mobyDick = new Book("Moby Dick", 357, "Herman Melville");
 mobyDick.addBookToLibrary();
-mobyDick.updateReadStatus(true);
-mobyDick.updateReadStatus(false);
+mobyDick.updateReadStatus("No");
+mobyDick.updateReadStatus("Yes");
 
 console.log(myLibrary);
+
+myLibrary.forEach((book) => {
+  createCard(book);
+});
