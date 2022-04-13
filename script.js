@@ -7,10 +7,12 @@ const bookCardsContainer = document.querySelector(".book-cards");
 let myLibrary = [];
 
 // function to handle creation of new book cards
-const createCard = (book) => {
+const createCard = (book, index) => {
+  console.log();
   // create the container and add the css styling
   const cardContainer = document.createElement("div");
   cardContainer.classList.add("card-container");
+  cardContainer.setAttribute("id", index);
   // create the div to contain the book title, add css and text
   const cardTitle = document.createElement("div");
   cardTitle.classList.add("card-title");
@@ -31,7 +33,13 @@ const createCard = (book) => {
   const deleteButton = document.createElement("div");
   deleteButton.classList.add("delete-button", "button");
   deleteButton.innerHTML += "Delete";
-  deleteButton.dataset.title = book.title;
+  // add data attribute that contains the array index of the book
+  deleteButton.dataset.index = index;
+  // add event listener to the delete button
+  deleteButton.addEventListener("click", (e) => {
+    let index = e.target.dataset.index;
+    deleteCard(index);
+  });
   // add all card elements into the card container
   cardContainer.append(
     cardTitle,
@@ -45,7 +53,14 @@ const createCard = (book) => {
 };
 
 // function to handle deleting a single card
-const deleteCard = (book) => {};
+const deleteCard = (index) => {
+  // remove the book from the library array
+  myLibrary.splice(index, 1);
+  // remove the book card from the page
+  const cardToBeRemoved = document.getElementById(index);
+  // remove the specific book from the page
+  bookCardsContainer.removeChild(cardToBeRemoved);
+};
 
 // create a book constructor that takes in the title, pages, and author
 function Book(title, pages, author) {
@@ -76,15 +91,17 @@ console.log(myLibrary);
 
 // render the cards to the book collection
 myLibrary.forEach((book) => {
-  createCard(book);
+  // get index of each item being rendered. this is for deleting later
+  let index = myLibrary.indexOf(book);
+  // render cards for each book in the array
+  createCard(book, index);
 });
 
 // handlers for opening and closing the collection and add book form
 addBtn.addEventListener("click", () => {
-  console.log("asdf");
   addForm.classList.toggle("display");
 });
-
+// adding new card to the library
 submit.addEventListener("click", () => {
   // gather user input from form
   const titleVal = document.querySelector("#title").value;
@@ -97,27 +114,14 @@ submit.addEventListener("click", () => {
   newBook.updateReadStatus(readVal);
   // add that new Book to the library array
   newBook.addBookToLibrary();
+  // get the index of the new book
+  let index = myLibrary.indexOf(newBook);
   // add the new book to the page
-  createCard(newBook);
+  createCard(newBook, index);
   // close the form window
   addForm.classList.remove("display");
 });
-
-const deleteEl = document.querySelectorAll(".delete-button");
-const deleteBtns = Array.from(deleteEl);
-
-deleteBtns.forEach((btn) => {
-  btn.addEventListener("click", (e) => {
-    console.log(e.target.dataset.title);
-  });
-});
-
+// closes the form
 closeButton.addEventListener("click", () => {
   addForm.classList.remove("display");
 });
-
-// let newMyLibary = myLibrary.filter((book) => {
-//   book.title === "White Fang";
-// });
-
-// console.log(newMyLibary);
