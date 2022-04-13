@@ -1,5 +1,6 @@
 body {
-  background-color: grey;
+  background-color: #17183b;
+  color: white;
   margin: 0;
   padding: 0;
   font-family: "Courier New", Courier, monospace;
@@ -8,7 +9,8 @@ body {
 .nav {
   padding: 50px 0 50px 0;
   width: 100%;
-  background-color: white;
+  background-color: #ffb49a;
+  color: black;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -36,23 +38,43 @@ body {
 }
 
 .library-header {
-  font-size: 18px;
+  font-size: 25px;
   font-weight: bold;
   text-align: center;
+  padding-bottom: 20px;
 }
 
 .book-cards {
   display: grid;
-  padding-top: 30px;
+  padding: 30px;
+  border: 2px solid #989ad7;
+  border-radius: 6px;
+  background-color: #989ad7;
   grid-gap: 30px;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 1fr 1fr;
 }
 
+.card-container {
+  background-color: #17183b;
+  padding: 10px;
+  border-radius: 6px;
+}
+
+.info-container {
+  padding-bottom: 10px;
+}
 .add-form {
   display: none;
   width: 50%;
   padding-top: 20px;
+}
+
+input,
+select {
+  margin-bottom: 10px;
+  border-radius: 6px;
+  background-color: #989ad7;
 }
 
 .form-control-container {
@@ -66,22 +88,59 @@ body {
 }
 
 .add-button {
+  padding: 8px;
+  background-color: #17183b;
+  border-radius: 5px;
+  text-align: center;
+  margin-right: 20px;
+  color: white;
 }
 
-.add-to-lib {
+.submit {
+  margin-top: 6px;
+  padding: 8px;
+  background-color: #ff4f79;
+  border-radius: 5px;
+  text-align: center;
 }
 
-.close-button {
+.close {
+  margin-top: 6px;
+  padding: 8px;
+  background-color: #ff4f79;
+  border-radius: 5px;
+  text-align: center;
 }
 
 .delete-button {
+  padding: 8px;
+  font-weight: bold;
+  background-color: #ff4f79;
+  border-radius: 5px;
+  text-align: center;
 }
 
 .button:hover {
-  color: orange;
+  color: #a11692;
   cursor: pointer;
 }
 
 .display {
   display: block;
+}
+
+.hide {
+  display: none;
+}
+
+.footer {
+  padding: 25px 0px 25px 0px;
+  background-color: #ffb49a;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
+
+.add-button:hover {
+  color: #989ad7;
 }

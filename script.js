@@ -3,8 +3,16 @@ const addForm = document.querySelector(".add-form");
 const submit = document.querySelector(".submit");
 const closeButton = document.querySelector(".close");
 const bookCardsContainer = document.querySelector(".book-cards");
+const headerEl = document.querySelector(".library-header");
 
 let myLibrary = [];
+
+// create a function to handle toggling of what displays
+const toggleDisplay = () => {
+  addForm.classList.toggle("display");
+  bookCardsContainer.classList.toggle("hide");
+  headerEl.classList.toggle("hide");
+};
 
 // function to handle creation of new book cards
 const createCard = (book, index) => {
@@ -13,26 +21,29 @@ const createCard = (book, index) => {
   const cardContainer = document.createElement("div");
   cardContainer.classList.add("card-container");
   cardContainer.setAttribute("id", index);
+  // create an element to contain the book info, add css
+  const infoContainer = document.createElement("div");
+  infoContainer.classList.add("info-container");
   // create the div to contain the book title, add css and text
   const cardTitle = document.createElement("div");
   cardTitle.classList.add("card-title");
-  cardTitle.innerHTML += book.title;
+  cardTitle.innerHTML += `Title: ${book.title}`;
   // create the div to contain the book author, add css and text
   const cardAuthor = document.createElement("div");
   cardAuthor.classList.add("card-author");
-  cardAuthor.innerHTML += book.author;
+  cardAuthor.innerHTML += `Author: ${book.author}`;
   // create the div to contain the book pages, add css and text
   const cardPages = document.createElement("div");
   cardPages.classList.add("card-pages");
-  cardPages.innerHTML += book.pages;
+  cardPages.innerHTML += `Page Count: ${book.pages}`;
   // add the div to contain whether the book has been read or not, add css and text
   const cardHasRead = document.createElement("div");
   cardHasRead.classList.add("card-hasRead");
-  cardHasRead.innerHTML += book.isRead;
+  cardHasRead.innerHTML += `Read? ${book.isRead}`;
   // add the delete button div to the card, add css and text
   const deleteButton = document.createElement("div");
   deleteButton.classList.add("delete-button", "button");
-  deleteButton.innerHTML += "Delete";
+  deleteButton.innerHTML += "Remove";
   // add data attribute that contains the array index of the book
   deleteButton.dataset.index = index;
   // add event listener to the delete button
@@ -41,13 +52,8 @@ const createCard = (book, index) => {
     deleteCard(index);
   });
   // add all card elements into the card container
-  cardContainer.append(
-    cardTitle,
-    cardAuthor,
-    cardPages,
-    cardHasRead,
-    deleteButton
-  );
+  infoContainer.append(cardTitle, cardAuthor, cardPages, cardHasRead);
+  cardContainer.append(infoContainer, deleteButton);
   // add the new book card to the book card container
   bookCardsContainer.appendChild(cardContainer);
 };
@@ -99,7 +105,7 @@ myLibrary.forEach((book) => {
 
 // handlers for opening and closing the collection and add book form
 addBtn.addEventListener("click", () => {
-  addForm.classList.toggle("display");
+  toggleDisplay();
 });
 // adding new card to the library
 submit.addEventListener("click", () => {
@@ -119,9 +125,9 @@ submit.addEventListener("click", () => {
   // add the new book to the page
   createCard(newBook, index);
   // close the form window
-  addForm.classList.remove("display");
+  toggleDisplay();
 });
 // closes the form
 closeButton.addEventListener("click", () => {
-  addForm.classList.remove("display");
+  toggleDisplay();
 });
