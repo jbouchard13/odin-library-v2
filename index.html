@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="styles.css" />
-    <title>My Library</title>
+    <title>Library</title>
   </head>
   <body>
     <div class="nav">
@@ -14,41 +14,49 @@
       height='40px'
       width='40px'
       /> -->
-      <div class="nav-title">Library App</div>
+      <div class="nav-title">My Library</div>
       <div class="add-button button">New Book</div>
     </div>
-    <div class="container">
-      <div class="add-form">
-        <div class="inputs">
-          <label for="title">Book's Title</label>
-          <input type="text" id="title" name="title" />
+    <div class="page-container">
+      <div class="container">
+        <div class="add-form">
+          <div class="inputs">
+            <label for="title">What's the title?</label>
+            <input type="text" id="title" name="title" />
 
-          <label for="author">Book's Author</label>
-          <input type="text" id="author" name="author" />
+            <label for="author">Who is the author?</label>
+            <input type="text" id="author" name="author" />
 
-          <label for="pages">Number of Pages</label>
-          <input type="number" id="pages" name="pages" />
+            <label for="pages">How many pages?</label>
+            <!-- onkeydown removes ability for "e" to be entered into number input -->
+            <input
+              type="number"
+              onkeydown="return event.keyCode !== 69"
+              id="pages"
+              name="pages"
+            />
 
-          <label for="hasRead">Read before?</label>
-          <select id="hasRead">
-            <option value="Yes">Yes</option>
-            <option value="No">No</option>
-          </select>
+            <label for="hasRead">Have you read it?</label>
+            <select id="hasRead">
+              <option value="Yes">Yes</option>
+              <option value="No">No</option>
+            </select>
+          </div>
+          <div class="form-control-container">
+            <div class="submit button">Add Book</div>
+            <div class="close button">Close</div>
+          </div>
         </div>
-        <div class="form-control-container">
-          <div class="submit button">Add Book</div>
-          <div class="close button">Close</div>
+        <div class="library-container">
+          <div class="library-header">Your Book Collection</div>
+          <div class="book-cards">
+            <!-- cards will be created with js -->
+          </div>
         </div>
       </div>
-      <div class="library-container">
-        <div class="library-header">Your Book Collection</div>
-        <div class="book-cards">
-          <!-- cards will be created with js -->
-        </div>
-      </div>
+
+      <div class="footer"></div>
     </div>
-
-    <div class="footer"></div>
     <script src="script.js"></script>
   </body>
 </html>

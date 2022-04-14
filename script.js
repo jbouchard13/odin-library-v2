@@ -14,6 +14,25 @@ const toggleDisplay = () => {
   headerEl.classList.toggle("hide");
 };
 
+// create a message notification to warn the user for invalid form input
+const warningDisplay = () => {
+  const warningContainer = document.createElement("div");
+  warningContainer.classList.add("warning-container");
+
+  const warningText = document.createElement("h4");
+  warningText.textContent =
+    "Please fill out each section of the form before trying to add a book :)";
+  const okButton = document.createElement("div");
+  okButton.classList.add("ok-button", "button");
+  okButton.innerHTML += "Okay";
+  okButton.addEventListener("click", () => {
+    addForm.removeChild(warningContainer);
+  });
+
+  warningContainer.append(warningText, okButton);
+  addForm.appendChild(warningContainer);
+};
+
 // function to handle creation of new book cards
 const createCard = (book, index) => {
   console.log();
@@ -21,25 +40,46 @@ const createCard = (book, index) => {
   const cardContainer = document.createElement("div");
   cardContainer.classList.add("card-container");
   cardContainer.setAttribute("id", index);
+
   // create an element to contain the book info, add css
   const infoContainer = document.createElement("div");
   infoContainer.classList.add("info-container");
+
   // create the div to contain the book title, add css and text
   const cardTitle = document.createElement("div");
   cardTitle.classList.add("card-title");
   cardTitle.innerHTML += `Title: ${book.title}`;
+
   // create the div to contain the book author, add css and text
   const cardAuthor = document.createElement("div");
   cardAuthor.classList.add("card-author");
   cardAuthor.innerHTML += `Author: ${book.author}`;
+
   // create the div to contain the book pages, add css and text
   const cardPages = document.createElement("div");
   cardPages.classList.add("card-pages");
   cardPages.innerHTML += `Page Count: ${book.pages}`;
+
   // add the div to contain whether the book has been read or not, add css and text
   const cardHasRead = document.createElement("div");
   cardHasRead.classList.add("card-hasRead");
   cardHasRead.innerHTML += `Read? ${book.isRead}`;
+
+  // add a button to update if the book has been read or not
+  const updateReadButton = document.createElement("div");
+  updateReadButton.classList.add("update-button", "button");
+  updateReadButton.innerHTML += "Update Read Status";
+  // add an event listener to handle the swapping of read status
+  updateReadButton.addEventListener("click", () => {
+    if (book.isRead === "Yes") {
+      book.updateReadStatus("No");
+      cardHasRead.innerHTML = `Read? ${book.isRead}`;
+    } else {
+      book.updateReadStatus("Yes");
+      cardHasRead.innerHTML = `Read? ${book.isRead}`;
+    }
+  });
+
   // add the delete button div to the card, add css and text
   const deleteButton = document.createElement("div");
   deleteButton.classList.add("delete-button", "button");
@@ -53,7 +93,7 @@ const createCard = (book, index) => {
   });
   // add all card elements into the card container
   infoContainer.append(cardTitle, cardAuthor, cardPages, cardHasRead);
-  cardContainer.append(infoContainer, deleteButton);
+  cardContainer.append(infoContainer, updateReadButton, deleteButton);
   // add the new book card to the book card container
   bookCardsContainer.appendChild(cardContainer);
 };
@@ -62,6 +102,7 @@ const createCard = (book, index) => {
 const deleteCard = (index) => {
   // remove the book from the library array
   myLibrary.splice(index, 1);
+  console.log(myLibrary.length);
   // remove the book card from the page
   const cardToBeRemoved = document.getElementById(index);
   // remove the specific book from the page
@@ -69,7 +110,7 @@ const deleteCard = (index) => {
 };
 
 // create a book constructor that takes in the title, pages, and author
-function Book(title, pages, author) {
+function Book(title, author, pages) {
   this.title = title;
   this.pages = pages;
   this.author = author;
@@ -84,14 +125,6 @@ Book.prototype.addBookToLibrary = function () {
 Book.prototype.updateReadStatus = function (status) {
   this.isRead = status;
 };
-
-const whiteFang = new Book("White Fang", 160, "Jack London");
-whiteFang.addBookToLibrary();
-
-const mobyDick = new Book("Moby Dick", 357, "Herman Melville");
-mobyDick.addBookToLibrary();
-mobyDick.updateReadStatus("No");
-mobyDick.updateReadStatus("Yes");
 
 console.log(myLibrary);
 
@@ -114,20 +147,32 @@ submit.addEventListener("click", () => {
   const authorVal = document.querySelector("#author").value;
   const numberVal = document.querySelector("#pages").value;
   const readVal = document.querySelector("#hasRead").value;
-  console.log(titleVal, authorVal, numberVal, readVal);
-  // use that input to create a new Book
-  let newBook = new Book(titleVal, authorVal, numberVal);
-  newBook.updateReadStatus(readVal);
-  // add that new Book to the library array
-  newBook.addBookToLibrary();
-  // get the index of the new book
-  let index = myLibrary.indexOf(newBook);
-  // add the new book to the page
-  createCard(newBook, index);
-  // close the form window
-  toggleDisplay();
+  if (titleVal === "") {
+    warningDisplay();
+  } else if (authorVal === "") {
+    warningDisplay();
+  } else if (numberVal === "") {
+    warningDisplay();
+  } else {
+    // use that input to create a new Book
+    let newBook = new Book(titleVal, authorVal, numberVal);
+    newBook.updateReadStatus(readVal);
+    // add that new Book to the library array
+    newBook.addBookToLibrary();
+    // get the index of the new book
+    let index = myLibrary.indexOf(newBook);
+    // add the new book to the page
+    createCard(newBook, index);
+    // close the form window
+    toggleDisplay();
+  }
 });
 // closes the form
 closeButton.addEventListener("click", () => {
   toggleDisplay();
+  // close out any warnings that were displayed in the form
+  const warningContainer = document.querySelector(".warning-container");
+  if (warningContainer !== null) {
+    addForm.removeChild(warningContainer);
+  }
 });
