@@ -8,12 +8,22 @@ const sampleCard = document.querySelector(".sample-container");
 
 let myLibrary = [];
 
+// determines whether to display the sample card or not
 const checkLibLength = () => {
   if (myLibrary.length > 0) {
     sampleCard.classList.add("hide");
   } else {
     sampleCard.classList.remove("hide");
   }
+};
+
+// determines if the title already exists in the array
+const checkTitle = (newTitle) => {
+  // check through all of the book object's titles
+  return myLibrary.some((book) => {
+    // return whether it exists in the array or not
+    return newTitle === book.title;
+  });
 };
 
 checkLibLength();
@@ -26,22 +36,37 @@ const toggleDisplay = () => {
 };
 
 // create a message notification to warn the user for invalid form input
-const warningDisplay = () => {
+const warningDisplay = (errorType) => {
   const warningContainer = document.createElement("div");
   warningContainer.classList.add("warning-container");
+  if (errorType === "input") {
+    const warningText = document.createElement("h4");
+    warningText.textContent =
+      "Please fill out each section of the form before trying to add a book :)";
 
-  const warningText = document.createElement("h4");
-  warningText.textContent =
-    "Please fill out each section of the form before trying to add a book :)";
-  const okButton = document.createElement("div");
-  okButton.classList.add("ok-button", "button");
-  okButton.innerHTML += "Okay";
-  okButton.addEventListener("click", () => {
-    addForm.removeChild(warningContainer);
-  });
+    const okButton = document.createElement("div");
+    okButton.classList.add("ok-button", "button");
+    okButton.innerHTML += "Okay";
+    okButton.addEventListener("click", () => {
+      addForm.removeChild(warningContainer);
+    });
 
-  warningContainer.append(warningText, okButton);
-  addForm.appendChild(warningContainer);
+    warningContainer.append(warningText, okButton);
+    addForm.appendChild(warningContainer);
+  } else if (errorType === "duplicate") {
+    const warningText = document.createElement("h4");
+    warningText.textContent =
+      "Oops, it looks like you've already added this book!";
+    const okButton = document.createElement("div");
+    okButton.classList.add("ok-button", "button");
+    okButton.innerHTML += "Okay";
+    okButton.addEventListener("click", () => {
+      addForm.removeChild(warningContainer);
+    });
+
+    warningContainer.append(warningText, okButton);
+    addForm.appendChild(warningContainer);
+  }
 };
 
 // function to handle creation of new book cards
@@ -74,7 +99,7 @@ const createCard = (book) => {
   // add the div to contain whether the book has been read or not, add css and text
   const cardHasRead = document.createElement("div");
   cardHasRead.classList.add("card-hasRead");
-  cardHasRead.innerHTML += `Read? ${book.isRead}`;
+  cardHasRead.innerHTML += `Read it? ${book.isRead}`;
 
   // add a button to update if the book has been read or not
   const updateReadButton = document.createElement("div");
@@ -84,10 +109,10 @@ const createCard = (book) => {
   updateReadButton.addEventListener("click", () => {
     if (book.isRead === "Yes") {
       book.updateReadStatus("No");
-      cardHasRead.innerHTML = `Read? ${book.isRead}`;
+      cardHasRead.innerHTML = `Read it? ${book.isRead}`;
     } else {
       book.updateReadStatus("Yes");
-      cardHasRead.innerHTML = `Read? ${book.isRead}`;
+      cardHasRead.innerHTML = `Read it? ${book.isRead}`;
     }
   });
 
@@ -142,8 +167,6 @@ Book.prototype.updateReadStatus = function (status) {
   this.isRead = status;
 };
 
-console.log(myLibrary);
-
 // render the cards to the book collection
 myLibrary.forEach((book) => {
   // get index of each item being rendered. this is for deleting later
@@ -171,12 +194,15 @@ submit.addEventListener("click", () => {
   const authorVal = document.querySelector("#author").value;
   const numberVal = document.querySelector("#pages").value;
   const readVal = document.querySelector("#hasRead").value;
+  let duplicateTitle = checkTitle(titleVal);
   if (titleVal === "") {
-    warningDisplay();
+    warningDisplay("input");
   } else if (authorVal === "") {
-    warningDisplay();
+    warningDisplay("input");
   } else if (numberVal === "") {
-    warningDisplay();
+    warningDisplay("input");
+  } else if (duplicateTitle === true) {
+    warningDisplay("duplicate");
   } else {
     // use that input to create a new Book
     let newBook = new Book(titleVal, authorVal, numberVal);
@@ -189,7 +215,6 @@ submit.addEventListener("click", () => {
     createCard(newBook, index);
     // remove the sample if needed
     checkLibLength();
-    console.log(myLibrary);
     // close the form window
     toggleDisplay();
   }

@@ -77,6 +77,12 @@ body {
   align-items: center;
 }
 
+.ok-button {
+  padding: 10px 20px 10px 20px;
+  border-radius: 6px;
+  background-color: #ff4f79;
+}
+
 input,
 select {
   margin-bottom: 10px;
