@@ -150,22 +150,38 @@ const deleteCard = (title) => {
   console.log(myLibrary);
 };
 
-// create a book constructor that takes in the title, pages, and author
-function Book(title, author, pages) {
-  this.title = title;
-  this.pages = pages;
-  this.author = author;
-  this.isRead = "No";
+// updated the Book constructor to a class
+class Book {
+  constructor(title, author, pages) {
+    (this.title = title), (this.author = author), (this.pages = pages);
+  }
+  isRead = "No";
+
+  addBookToLibrary = () => {
+    myLibrary.push(this);
+  };
+
+  updateReadStatus = (status) => {
+    this.isRead = status;
+  };
 }
 
-// using the prototype, add a function that adds the selected book to the library.
-Book.prototype.addBookToLibrary = function () {
-  myLibrary.push(this);
-};
-// update whether the book has been read or not
-Book.prototype.updateReadStatus = function (status) {
-  this.isRead = status;
-};
+// // create a book constructor that takes in the title, pages, and author
+// function Book(title, author, pages) {
+//   this.title = title;
+//   this.pages = pages;
+//   this.author = author;
+//   this.isRead = "No";
+// }
+
+// // using the prototype, add a function that adds the selected book to the library.
+// Book.prototype.addBookToLibrary = function () {
+//   myLibrary.push(this);
+// };
+// // update whether the book has been read or not
+// Book.prototype.updateReadStatus = function (status) {
+//   this.isRead = status;
+// };
 
 // render the cards to the book collection
 myLibrary.forEach((book) => {
